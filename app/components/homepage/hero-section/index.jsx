@@ -28,14 +28,14 @@ function HeroSection() {
               </div>
               
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                Hi, I'm{' '}
+                Hi, I&apos;m{' '}
                 <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent">
                   {personalData.name}
                 </span>
               </h1>
               
               <div className="text-xl md:text-2xl lg:text-3xl font-semibold">
-                <span className="text-slate-400">I'm a </span>
+                <span className="text-slate-400">I&apos;m a </span>
                 <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
                   {personalData.designation}
                 </span>
@@ -119,29 +119,29 @@ function HeroSection() {
                   
                   <div className="ml-4 mb-1">
                     <span className="text-blue-400">name:</span>
-                    <span className="text-slate-400 ml-2">'</span>
+                    <span className="text-slate-400 ml-2">&apos;</span>
                     <span className="text-green-400">{personalData.name}</span>
-                    <span className="text-slate-400">',</span>
+                    <span className="text-slate-400">&apos;,</span>
                   </div>
                   
                   <div className="ml-4 mb-1">
                     <span className="text-blue-400">role:</span>
-                    <span className="text-slate-400 ml-2">'</span>
+                    <span className="text-slate-400 ml-2">&apos;</span>
                     <span className="text-green-400">SDE Intern at Leucine</span>
-                    <span className="text-slate-400">',</span>
+                    <span className="text-slate-400">&apos;,</span>
                   </div>
                   
                   <div className="ml-4 mb-1">
                     <span className="text-blue-400">skills:</span>
-                    <span className="text-slate-400 ml-2">['</span>
+                    <span className="text-slate-400 ml-2">[&apos;</span>
                     <span className="text-green-400">React</span>
-                    <span className="text-slate-400">', '</span>
+                    <span className="text-slate-400">&apos;, &apos;</span>
                     <span className="text-green-400">TypeScript</span>
-                    <span className="text-slate-400">', '</span>
+                    <span className="text-slate-400">&apos;, &apos;</span>
                     <span className="text-green-400">Java</span>
-                    <span className="text-slate-400">', '</span>
+                    <span className="text-slate-400">&apos;, &apos;</span>
                     <span className="text-green-400">PostgreSQL</span>
-                    <span className="text-slate-400">'],</span>
+                    <span className="text-slate-400">&apos;],</span>
                   </div>
                   
                   <div className="ml-4 mb-1">
