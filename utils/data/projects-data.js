@@ -7,8 +7,8 @@ export const projectsData = [
     {
         id: 1,
         name: 'Bud-Wiser',
-        description: "Bud-Wiser simplifies financial management by providing a user-friendly platform that leverages React’s dynamic UI, Node.js’ efficient server-side capabilities, and MongoDB's robust data storage, fostering informed financial decision-making.",
-        tools: ['Express', 'MongoDB', 'React','Typescript' ,'React-Query', 'Prisma' , 'Tailwind'],
+        description: "Architected zero-trust, type-safe full-stack platform with Next.js 14, TypeScript APIs/Server Actions, and Clerk authentication—delivering secure endpoints and responsive UIs (TailwindCSS/shadcn UI) with interactive transaction visualizations. Engineered high-throughput data infrastructure using Prisma ORM on SQLite & Vercel PostgreSQL to support real-time transaction processing, category analytics, and historical data aggregation.",
+        tools: ['React', 'Typescript', 'React-Query', 'Prisma', 'Tailwind', 'Next.js', 'Clerk', 'PostgreSQL', 'SQLite'],
         role: 'Full Stack Developer',
         code: '',
         demo: '',

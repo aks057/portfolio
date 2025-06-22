@@ -7,64 +7,67 @@ import Marquee from "react-fast-marquee";
 
 function Skills() {
   return (
-    <div id="skills" className="relative z-50 border-t my-12 lg:my-24 border-[#25213b]">
-      <div className="w-[100px] h-[100px] bg-violet-100 rounded-full absolute top-6 left-[42%] translate-x-1/2 filter blur-3xl  opacity-20"></div>
-
-      <div className="flex justify-center -translate-y-[1px]">
-        <div className="w-3/4">
-          <div className="h-[1px] bg-gradient-to-r from-transparent via-violet-500 to-transparent  w-full" />
-        </div>
+    <section id="skills" className="py-12 lg:py-20 relative overflow-hidden">
+      {/* Enhanced Background Elements */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-green-500/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="flex justify-center my-5 lg:py-8">
-        <div className="flex  items-center">
-          <span className="w-24 h-[2px] bg-[#1a1443]"></span>
-          <span className="bg-[#1a1443] w-fit text-white p-2 px-5 text-xl rounded-md">
-            Skills
-          </span>
-          <span className="w-24 h-[2px] bg-[#1a1443]"></span>
+      <div className="container mx-auto px-4 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-xl md:text-2xl font-medium mb-3 text-slate-400 italic">
+            My <span className="text-slate-500">Skills</span> <span className="text-xs">(allegedly)</span>
+          </h2>
         </div>
-      </div>
 
-      <div className="w-full my-12">
-        <Marquee
-          gradient={false}
-          speed={80}
-          pauseOnHover={true}
-          pauseOnClick={true}
-          delay={0}
-          play={true}
-          direction="left"
-        >
-          {skillsData.map((skill, id) => (
-            <div className="w-36 min-w-fit h-fit flex flex-col items-center justify-center transition-all duration-500 m-3 sm:m-5 rounded-lg group relative hover:scale-[1.15] cursor-pointer"
-              key={id}>
-              <div className="h-full w-full rounded-lg border border-[#1f223c] bg-[#11152c] shadow-none shadow-gray-50 group-hover:border-violet-500 transition-all duration-500">
-                <div className="flex -translate-y-[1px] justify-center">
-                  <div className="w-3/4">
-                    <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-violet-500 to-transparent" />
+        {/* Enhanced Skills Display */}
+        <div className="relative">
+          {/* Gradient Overlays */}
+          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-slate-900 to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-slate-900 to-transparent z-10 pointer-events-none"></div>
+          
+          <Marquee
+            gradient={false}
+            speed={60}
+            pauseOnHover={true}
+            pauseOnClick={true}
+            delay={0}
+            play={true}
+            direction="left"
+          >
+            {skillsData.map((skill, id) => (
+              <div 
+                className="mx-4 group cursor-pointer"
+                key={id}
+              >
+                <div className="glass-card p-6 rounded-2xl min-w-[140px] hover:border-green-500/30 transition-all duration-500 group-hover:scale-105">
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="relative">
+                      <div className="w-12 h-12 flex items-center justify-center rounded-xl bg-gradient-to-br from-slate-800 to-slate-700 group-hover:from-green-500/20 group-hover:to-emerald-500/20 transition-all duration-300">
+                        <Image
+                          src={skillsImage(skill)?.src}
+                          alt={skill}
+                          width={32}
+                          height={32}
+                          className="w-8 h-8 object-contain group-hover:scale-110 transition-transform duration-300"
+                        />
+                      </div>
+                      {/* Skill Level Indicator */}
+                      <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <p className="text-slate-300 text-sm font-medium text-center group-hover:text-green-400 transition-colors duration-300">
+                      {skill}
+                    </p>
                   </div>
-                </div>
-                <div className="flex flex-col items-center justify-center gap-3 p-6">
-                  <div className="h-8 sm:h-10">
-                    <Image
-                      src={skillsImage(skill)?.src}
-                      alt={skill}
-                      width={40}
-                      height={40}
-                      className="h-full w-auto rounded-lg"
-                    />
-                  </div>
-                  <p className="text-white text-sm sm:text-lg">
-                    {skill}
-                  </p>
                 </div>
               </div>
-            </div>
-          ))}
-        </Marquee>
+            ))}
+          </Marquee>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

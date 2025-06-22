@@ -2,83 +2,94 @@
 import Image from "next/image";
 
 import { educations } from "@/utils/data/educations";
-import { BsPersonWorkspace } from "react-icons/bs";
+import { BsBook } from "react-icons/bs";
 import AnimationLottie from "../../helper/animation-lottie";
-import GlowCard from "../../helper/glow-card";
 import lottieFile from '/public/lottie/study.json';
 
 function Education() {
   return (
-    <div id="education" className="relative z-50 border-t my-12 lg:my-24 border-[#25213b]">
-      <Image
-        src="/section.svg"
-        alt="Hero"
-        width={1572}
-        height={795}
-        className="absolute top-0 -z-10"
-      />
-      <div className="flex justify-center -translate-y-[1px]">
-        <div className="w-3/4">
-          <div className="h-[1px] bg-gradient-to-r from-transparent via-violet-500 to-transparent  w-full" />
-        </div>
+    <section id="education" className="py-12 lg:py-20 relative overflow-hidden">
+      {/* Enhanced Background Elements */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-indigo-500/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-violet-500/5 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="flex justify-center my-5 lg:py-8">
-        <div className="flex  items-center">
-          <span className="w-24 h-[2px] bg-[#1a1443]"></span>
-          <span className="bg-[#1a1443] w-fit text-white p-2 px-5 text-xl rounded-md">
-            Education
-          </span>
-          <span className="w-24 h-[2px] bg-[#1a1443]"></span>
+      <div className="container mx-auto px-4 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-xl md:text-2xl font-medium mb-3 text-slate-400 italic">
+            My <span className="text-slate-500">Education</span> <span className="text-xs">(barely survived)</span>
+          </h2>
         </div>
-      </div>
 
-      <div className="py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
-          <div className="flex justify-center items-start">
-            <div className="w-3/4 h-3/4">
-              <AnimationLottie animationPath={lottieFile} />
-            </div>
-          </div>
+        {/* Centered Education Cards */}
+        <div className="max-w-4xl mx-auto">
+          <div className="space-y-8">
+            {educations.map((education, index) => (
+              <div
+                key={education.id}
+                className="glass-card p-6 lg:p-8 rounded-2xl hover:border-indigo-500/30 transition-all duration-500 group"
+              >
+                {/* Duration Badge */}
+                <div className="flex justify-between items-start mb-6">
+                  <div className="inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r from-indigo-500/20 to-violet-500/20 border border-indigo-500/30">
+                    <span className="text-sm font-medium text-indigo-400">{education.duration}</span>
+                  </div>
+                  <div className="text-indigo-400 group-hover:scale-110 transition-transform duration-300">
+                    <BsBook size={24} />
+                  </div>
+                </div>
 
-          <div>
-            <div className="flex flex-col gap-6">
-              {
-                educations.map(education => (
-                  <GlowCard key={education.id} identifier={`education-${education.id}`}>
-                    <div className="p-3 relative text-white">
-                      <Image
-                        src="/blur-23.svg"
-                        alt="Hero"
-                        width={1080}
-                        height={200}
-                        className="absolute bottom-0 opacity-80"
-                      />
-                      <div className="flex justify-center">
-                        <p className="text-xs sm:text-sm text-[#16f2b3]">
-                          {education.duration}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-x-8 px-3 py-5">
-                        <div className="text-violet-500  transition-all duration-300 hover:scale-125">
-                          <BsPersonWorkspace size={36} />
-                        </div>
-                        <div>
-                          <p className="text-base sm:text-xl mb-2 font-medium uppercase">
-                            {education.title}
-                          </p>
-                          <p className="text-sm sm:text-base">{education.institution}</p>
-                        </div>
+                {/* Education Details */}
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-xl lg:text-2xl font-bold text-white mb-2 group-hover:text-indigo-400 transition-colors duration-300">
+                      {education.title}
+                    </h3>
+                    <p className="text-lg font-semibold text-slate-300 mb-1">
+                      {education.institution}
+                    </p>
+                    {education.location && (
+                      <p className="text-sm text-slate-400 flex items-center gap-1">
+                        <span>📍</span> {education.location}
+                      </p>
+                    )}
+                  </div>
+
+                  {education.description && (
+                    <p className="text-slate-300 leading-relaxed">
+                      {education.description}
+                    </p>
+                  )}
+
+                  {/* Additional Info */}
+                  {(education.grade || education.cgpa) && (
+                    <div className="space-y-2">
+                      <h4 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">
+                        Academic Performance
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {education.grade && (
+                          <span className="px-3 py-1 bg-gradient-to-r from-slate-800 to-slate-700 border border-slate-600 rounded-full text-sm font-medium text-slate-300">
+                            Grade: {education.grade}
+                          </span>
+                        )}
+                        {education.cgpa && (
+                          <span className="px-3 py-1 bg-gradient-to-r from-slate-800 to-slate-700 border border-slate-600 rounded-full text-sm font-medium text-slate-300">
+                            CGPA: {education.cgpa}
+                          </span>
+                        )}
                       </div>
                     </div>
-                  </GlowCard>
-                ))
-              }
-            </div>
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -4,33 +4,36 @@ import ProjectCard from './project-card';
 const Projects = () => {
 
   return (
-    <div id='projects' className="relative z-50  my-12 lg:my-24">
-      <div className="sticky top-10">
-        <div className="w-[80px] h-[80px] bg-violet-100 rounded-full absolute -top-3 left-0 translate-x-1/2 filter blur-3xl  opacity-30"></div>
-        <div className="flex items-center justify-start relative">
-          <span className="bg-[#1a1443] absolute left-0  w-fit text-white px-5 py-3 text-xl rounded-md">
-            PROJECTS
-          </span>
-          <span className="w-full h-[2px] bg-[#1a1443]"></span>
-        </div>
+    <section id='projects' className="py-12 lg:py-20 relative overflow-hidden">
+      {/* Enhanced Background Elements */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-1/4 right-1/4 w-72 h-72 bg-orange-500/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-red-500/5 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="pt-24">
-        <div className="flex flex-col gap-6">
-          {projectsData.slice(0, 4).map((project, index) => (
-            <div
-              id={`sticky-card-${index + 1}`}
-              key={index}
-              className="sticky-card w-full mx-auto max-w-2xl sticky"
-            >
-              <div className="box-border flex items-center justify-center rounded shadow-[0_0_30px_0_rgba(0,0,0,0.3)] transition-all duration-[0.5s]">
+      <div className="container mx-auto px-4 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-xl md:text-2xl font-medium mb-3 text-slate-400 italic">
+            My <span className="text-slate-500">Projects</span> <span className="text-xs">(they actually work!)</span>
+          </h2>
+        </div>
+
+        {/* Enhanced Projects Display */}
+        <div className="max-w-4xl mx-auto">
+          <div className="space-y-8">
+            {projectsData.slice(0, 4).map((project, index) => (
+              <div
+                key={index}
+                className="glass-card p-0 rounded-2xl overflow-hidden hover:border-orange-500/30 transition-all duration-500 group"
+              >
                 <ProjectCard project={project} />
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -1,69 +1,51 @@
 // @flow strict
 
 import * as React from 'react';
+import { BsCodeSlash } from "react-icons/bs";
 
 function ProjectCard({ project }) {
 
   return (
-    <div className="from-[#0d1224] border-[#1b2c68a0] relative rounded-lg border bg-gradient-to-r to-[#0a0d37] w-full">
-      <div className="flex flex-row">
-        <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-pink-500 to-violet-600"></div>
-        <div className="h-[1px] w-full bg-gradient-to-r from-violet-600 to-transparent"></div>
-      </div>
-      <div className="px-4 lg:px-8 py-3 lg:py-5 relative">
-        <div className="flex flex-row space-x-1 lg:space-x-2 absolute top-1/2 -translate-y-1/2">
-          <div className="h-2 w-2 lg:h-3 lg:w-3 rounded-full bg-red-400"></div>
-          <div className="h-2 w-2 lg:h-3 lg:w-3 rounded-full bg-orange-400"></div>
-          <div className="h-2 w-2 lg:h-3 lg:w-3 rounded-full bg-green-200"></div>
+    <div className="p-6 lg:p-8 group">
+      {/* Project Badge */}
+      <div className="flex justify-between items-start mb-6">
+        <div className="inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r from-orange-500/20 to-red-500/20 border border-orange-500/30">
+          <span className="text-sm font-medium text-orange-400">{project.role}</span>
         </div>
-        <p className="text-center ml-3 text-[#16f2b3] text-base lg:text-xl">
-          {project.name}
-        </p>
+        <div className="text-orange-400 group-hover:scale-110 transition-transform duration-300">
+          <BsCodeSlash size={24} />
+        </div>
       </div>
-      <div className="overflow-hidden border-t-[2px] border-indigo-900 px-4 lg:px-8 py-4 lg:py-8">
-        <code className="font-mono text-xs md:text-sm lg:text-base">
-          <div className="blink">
-            <span className="mr-2 text-pink-500">const</span>
-            <span className="mr-2 text-white">project</span>
-            <span className="mr-2 text-pink-500">=</span>
-            <span className="text-gray-400">{'{'}</span>
-          </div>
-          <div>
-            <span className="ml-4 lg:ml-8 mr-2 text-white">name:</span>
-            <span className="text-gray-400">{`'`}</span>
-            <span className="text-amber-300">{project.name}</span>
-            <span className="text-gray-400">{`',`}</span>
-          </div>
 
-          <div className="ml-4 lg:ml-8 mr-2">
-            <span className=" text-white">tools:</span>
-            <span className="text-gray-400">{` ['`}</span>
-            {
-              project.tools.map((tag, i) => (
-                <React.Fragment key={i}>
-                  <span className="text-amber-300">{tag}</span>
-                  {
-                    project.tools.length - 1 !== i &&
-                    <span className="text-gray-400">{`', '`}</span>
-                  }
-                </React.Fragment>
-              ))
-            }
-            <span className="text-gray-400">{"],"}</span>
+      {/* Project Details */}
+      <div className="space-y-4">
+        <div>
+          <h3 className="text-xl lg:text-2xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors duration-300">
+            {project.name}
+          </h3>
+          <p className="text-slate-300 leading-relaxed">
+            {project.description}
+          </p>
+        </div>
+
+        {/* Tech Stack */}
+        {project.tools && (
+          <div className="space-y-3">
+            <h4 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">
+              Technologies Used
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              {project.tools.map((tool, toolIndex) => (
+                <span 
+                  key={toolIndex} 
+                  className="px-3 py-1 bg-gradient-to-r from-slate-800 to-slate-700 border border-slate-600 rounded-full text-sm font-medium text-slate-300 hover:border-orange-500/50 hover:text-orange-400 transition-all duration-300"
+                >
+                  {tool}
+                </span>
+              ))}
+            </div>
           </div>
-          <div>
-            <span className="ml-4 lg:ml-8 mr-2 text-white">myRole:</span>
-            <span className="text-orange-400">{project.role}</span>
-            <span className="text-gray-400">,</span>
-          </div>
-          <div className="ml-4 lg:ml-8 mr-2">
-            <span className="text-white">Description:</span>
-            <span className="text-cyan-400">{' ' + project.description}</span>
-            <span className="text-gray-400">,</span>
-          </div>
-          
-          <div><span className="text-gray-400">{`};`}</span></div>
-        </code>
+        )}
       </div>
     </div>
   );
