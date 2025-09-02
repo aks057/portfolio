@@ -19,7 +19,7 @@ function Education() {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-xl md:text-2xl font-medium mb-3 text-slate-400 italic">
-            My <span className="text-slate-500">Education</span> <span className="text-xs">(barely survived)</span>
+            My <span className="text-slate-500">Education</span>
           </h2>
         </div>
 

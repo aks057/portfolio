@@ -17,7 +17,7 @@ function AboutSection() {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-xl md:text-2xl font-medium mb-3 text-slate-400 italic">
-            About <span className="text-slate-500">Me</span> <span className="text-xs">(because you asked)</span>
+            About <span className="text-slate-500">Me</span>
           </h2>
           <p className="text-slate-500 text-sm max-w-xl mx-auto italic">
             Just another developer doing developer things, nothing to see here
@@ -30,7 +30,7 @@ function AboutSection() {
             <div className="space-y-6">
               <div className="space-y-4">
                 <h3 className="text-lg font-medium text-slate-400 italic">
-                  Who am I? (as if you care...)
+                  Who am I?
                 </h3>
                 <div className="w-16 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"></div>
               </div>

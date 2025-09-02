@@ -24,7 +24,7 @@ function HeroSection() {
           <div className="order-2 lg:order-1 flex flex-col items-start justify-center space-y-8 animate-fade-in-up">
             <div className="space-y-6">
               <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 backdrop-blur-sm">
-                <span className="text-sm font-medium text-blue-400">👋 Welcome to my portfolio</span>
+                <span className="text-sm font-medium text-blue-400">Welcome to my portfolio</span>
               </div>
               
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
@@ -127,7 +127,7 @@ function HeroSection() {
                   <div className="ml-4 mb-1">
                     <span className="text-blue-400">role:</span>
                     <span className="text-slate-400 ml-2">&apos;</span>
-                    <span className="text-green-400">SDE Intern at Leucine</span>
+                    <span className="text-green-400">Software Engineer at Leucine AI</span>
                     <span className="text-slate-400">&apos;,</span>
                   </div>
                   

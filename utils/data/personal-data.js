@@ -2,7 +2,7 @@ export const personalData = {
   name: "Abhinash Kumar",
   profile: '/profile.png',
   designation: "Software Engineer",
-  description: "Oh, you want to know about me? Fine. I'm Abhinash, just another developer who codes stuff and pretends to know what they're doing. Currently at Leucine doing AI things (because that's trendy now). I study at IIIT Lucknow and play with React, Java, and databases. Sometimes I solve coding problems for fun... weird, I know.",
+  description: "Passionate Software Engineer specializing in full-stack development with expertise in React, Java, and database technologies. Currently contributing to AI-driven pharmaceutical solutions at Leucine. Pursuing my education at IIIT Lucknow while actively solving complex technical challenges and building innovative applications.",
   email: 'abhinash.iiitl@gmail.com',
   phone: '+91-7209899716',
   address: 'IIIT Lucknow',
