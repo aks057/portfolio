@@ -4,7 +4,7 @@ import Counter from "../../motion/counter";
 import Reveal from "../../motion/reveal";
 import SectionHeader from "../section-header";
 
-const CORE = ["React", "TypeScript", "Next.js", "Java", "PostgreSQL", "Node.js", "LLM APIs", "Stripe"];
+const CORE = ["Java", "Spring Boot", "Apache Kafka", "PostgreSQL", "React", "Next.js", "TypeScript", "Stripe"];
 
 function AboutSection() {
   return (
@@ -40,7 +40,7 @@ function AboutSection() {
           <p className="section-label">Now</p>
           <div>
             <p className="text-xl font-semibold tracking-tight text-fg">SDE at Leucine</p>
-            <p className="mt-1 text-sm text-muted">AI for pharma compliance · promoted from intern in May 2025</p>
+            <p className="mt-1 text-sm text-muted">Event streaming & ERP integrations · promoted from intern in May 2025</p>
           </div>
         </div>
 

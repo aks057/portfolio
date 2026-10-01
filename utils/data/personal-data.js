@@ -2,8 +2,8 @@ export const personalData = {
   name: "Abhinash Kumar",
   profile: '/profile.png',
   designation: "Software Engineer",
-  tagline: "I build AI-driven compliance products for pharma at Leucine: full-stack React, Java and PostgreSQL, plus LLM pipelines.",
-  description: "Software Development Engineer at Leucine, where I build AI-driven compliance tooling for the pharmaceutical industry. I work across the stack: React frontends, Java services, PostgreSQL, and LLM pipelines that read FDA regulatory documents. I graduated in IT from IIIT Lucknow in 2025, and competitive programming shaped how I think about performance and correctness.",
+  tagline: "I build backend and integration systems for pharma at Leucine: Kafka event pipelines, ERP integrations, Spring Boot services and React frontends.",
+  description: "Software Development Engineer at Leucine, where I build the systems that move pharma data reliably. I designed a Kafka event-streaming pipeline for real-time SAP integration, own our Acumatica ERP integration end to end, and built Stripe-backed subscription and feature-gating. I work in Java, Spring Boot, PostgreSQL and React. I graduated in IT from IIIT Lucknow in 2025, and competitive programming shaped how I think about performance and correctness.",
   email: 'abhinash.iiitl@gmail.com',
   phone: '+91-7209899716',
   address: 'Bangalore, India',
@@ -15,5 +15,5 @@ export const personalData = {
   codechef: "https://www.codechef.com/users/abhinashkmr",
   devUsername: "aks057",
   resume: "/resume.pdf",
-  exploring: ["Distributed systems", "LLM evals", "System design"],
+  exploring: ["Distributed systems", "Event-driven architecture", "System design"],
 }

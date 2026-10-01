@@ -14,7 +14,7 @@ const sans = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 const description =
-  "Abhinash Kumar: Software Development Engineer at Leucine building AI-driven compliance products with React, Java, PostgreSQL and LLMs. Codeforces Specialist, IIIT Lucknow '25.";
+  "Abhinash Kumar: Software Development Engineer at Leucine building Kafka event pipelines, ERP integrations and full-stack products with Java, Spring Boot, PostgreSQL and React. Codeforces Specialist, IIIT Lucknow '25.";
 
 export const metadata = {
   title: "Abhinash Kumar · Software Engineer",

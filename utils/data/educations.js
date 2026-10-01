@@ -5,7 +5,7 @@ export const educations = [
     duration: "2021 - 2025",
     institution: "Indian Institute of Information Technology, Lucknow",
     location: "Lucknow, India",
-    score: "CGPA 8.0",
+    score: "CGPA 7.7",
     description: "Coursework in Data Structures & Algorithms, OOP, Operating Systems and DBMS.",
   },
   {

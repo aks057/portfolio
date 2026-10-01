@@ -2,13 +2,13 @@ export const projectsData = [
   {
     id: 1,
     name: 'Bud-Wiser',
-    summary: 'Type-safe personal finance platform with real-time transaction analytics.',
+    summary: 'Secure budget-tracking platform with a zero-trust data layer and an analytics dashboard.',
     points: [
-      'Zero-trust full-stack app on Next.js 14 with TypeScript Server Actions and Clerk authentication.',
-      'Prisma ORM on SQLite and Vercel PostgreSQL for transaction processing, category analytics and historical aggregation.',
-      'Responsive UI with TailwindCSS and shadcn/ui, plus interactive transaction visualizations.',
+      'Next.js 14 with Supabase row-level security policies and atomic PostgreSQL functions for zero-trust data access.',
+      'Type-safe Server Actions with Zod validation and OAuth authentication.',
+      'Analytics dashboard with React Query caching and Recharts: category breakdowns, historical trends, and a TanStack Table with sorting, filtering and CSV export.',
     ],
-    tools: ['Next.js', 'TypeScript', 'React Query', 'Prisma', 'PostgreSQL', 'Clerk', 'Tailwind'],
+    tools: ['Next.js', 'TypeScript', 'Supabase', 'PostgreSQL', 'React Query', 'Zod', 'Recharts', 'Tailwind'],
     role: 'Full Stack',
     code: 'https://github.com/aks057/budget',
     demo: '',

@@ -8,7 +8,7 @@ import { gsap, MOTION_OK, MOTION_REDUCED, useGSAP } from "../../motion/gsap";
 import Magnetic from "../../motion/magnetic";
 import { scrollToHash } from "../../motion/smooth-scroll";
 
-const HEADLINE = ["Software engineer", "building AI products", "for regulated industries."];
+const HEADLINE = ["Software engineer", "building reliable systems", "for regulated industries."];
 
 function HeroSection() {
   const ref = useRef(null);
