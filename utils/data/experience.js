@@ -1,20 +1,28 @@
 export const experiences = [
   {
     id: 1,
-    title: 'Software Development Engineer ',
     company: "Leucine - AI for Pharma",
-    duration: "(May 2025 - Present)",
     location: "Bangalore, India",
-    techStack: ["React.js", "Java", "PostgreSQL"],
-    description: "Implemented advanced GPT-based language models to perform deep semantic analysis of FDA regulatory documents, significantly enhancing interpretive accuracy and entity extraction precision. Built real-time compliance dashboards & Slack alert systems for critical violations and updates, reducing manual monitoring by 95% and enabling data-driven decision-making."
+    roles: [
+      {
+        title: "Software Development Engineer",
+        duration: "May 2025 - Present",
+        techStack: ["React.js", "Java", "PostgreSQL", "OpenAI", "Slack API"],
+        points: [
+          "Built an LLM pipeline on GPT models for semantic analysis of FDA regulatory documents, improving interpretive accuracy and entity-extraction precision.",
+          "Shipped real-time compliance dashboards and Slack alerting for critical violations and regulatory updates, cutting manual monitoring by 95%.",
+        ],
+      },
+      {
+        title: "Software Development Engineer Intern",
+        duration: "Jan 2025 - Apr 2025",
+        techStack: ["React.js", "Java", "PostgREST", "PostgreSQL", "Stripe"],
+        points: [
+          "Architected an end-to-end Stripe integration for subscription billing and real-time transaction dashboards, automating invoice workflows and reconciliation.",
+          "Built platform security and operational controls: Google reCAPTCHA, rate limiting, usage quotas and domain allow/block lists.",
+          "Automated data-validation pipelines with ChatGPT-driven checks, and worked cross-functionally to speed up multi-platform delivery.",
+        ],
+      },
+    ],
   },
-  {
-    id: 2,
-    title: "Software Development Engineer Intern",
-    company: "Leucine - AI for Pharma",
-    duration: "(Jan 2025 - April 2025)",
-    location: "Bangalore, India",
-    techStack: ["React.js", "Java", "PostgREST", "PostgreSQL"],
-    description: "Collaborated cross-functionally to architect and optimize multi-platform solutions, streamlining workflows and accelerating project delivery timelines. Architected end-to-end Stripe integration for secure subscription billing and real-time transaction dashboards, automating invoice workflows and reducing manual reconciliation. Built scalable security and operational controls (Google reCAPTCHA, rate limiting, usage quotas, domain allow/block) and automated data-validation pipelines with ChatGPT-driven checks."
-  }
 ]

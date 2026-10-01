@@ -1,62 +1,29 @@
-import ayla from '/public/image/ayla.jpg';
-import crefin from '/public/image/crefin.jpg';
-import realEstate from '/public/image/real-estate.jpg';
-import travel from '/public/image/travel.jpg';
-
 export const projectsData = [
-    {
-        id: 1,
-        name: 'Bud-Wiser',
-        description: "Architected zero-trust, type-safe full-stack platform with Next.js 14, TypeScript APIs/Server Actions, and Clerk authentication—delivering secure endpoints and responsive UIs (TailwindCSS/shadcn UI) with interactive transaction visualizations. Engineered high-throughput data infrastructure using Prisma ORM on SQLite & Vercel PostgreSQL to support real-time transaction processing, category analytics, and historical data aggregation.",
-        tools: ['React', 'Typescript', 'React-Query', 'Prisma', 'Tailwind', 'Next.js', 'Clerk', 'PostgreSQL', 'SQLite'],
-        role: 'Full Stack Developer',
-        code: '',
-        demo: '',
-        image: crefin,
-    },
-    {
-        id: 2,
-        name: 'PricePal',
-        description: 'Developed a sophisticated web application designed to track Amazon products for stock availability, price drops, and significant discounts, enhancing the user shopping experience through timely notifications.',
-        tools: ['Next.js', 'Typescript CSS', 'Node.js', 'MongoDB'],
-        role: 'Full Stack Developer',
-        code: 'https://github.com/aks057/price-pal',
-        demo: 'https://price-pal-one.vercel.app/',
-        image: travel,
-    },
-    // {
-    //     id: 3,
-    //     name: 'AI Powered Real Estate',
-    //     description: 'My team built an AI-based real estate app using Replicate API and OpenAI. We used Express, Typescript, OpenAI, Replicate, Stripe, and Mongoose to develop the API. We utilized NextJS, Formik, TailwindCSS, and other npm libraries for the UI. We have trained multiple AI assistants using the latest GPT model and integrated Replicate API for image processing. We added role-based auth, subscription plans, Cron job scheduling, and payment integration with Stripe.',
-    //     tools: ['React', 'Bootstrap', 'SCSS', 'Stripe', 'Express', 'TypeScript', 'MongoDB', 'Azure Blob', 'OpenAI API', 'Replicate AI', 'Cronjob', 'JWT'],
-    //     code: '',
-    //     role: 'Full Stack Developer',
-    //     demo: '',
-    //     image: realEstate,
-    // }
-    // {
-    //     id: 4,
-    //     name: 'Newsroom Management',
-    //     description: "My team and I developed a newspaper management dashboard application called Newsroom Management. As a front-end developer, I worked on creating the dashboard using NextJS, Material UI, Redux, Calendar, and other necessary npm libraries. We used React Redux to manage the application's state and React-hook-form and Sun Editor to handle forms.",
-    //     tools: ['NextJS', 'Material UI', 'Redux', 'Sun Editor', "Calendar"],
-    //     code: '',
-    //     demo: '',
-    //     image: ayla,
-    //     role: 'Full Stack Developer',
-    // }
+  {
+    id: 1,
+    name: 'Bud-Wiser',
+    summary: 'Type-safe personal finance platform with real-time transaction analytics.',
+    points: [
+      'Zero-trust full-stack app on Next.js 14 with TypeScript Server Actions and Clerk authentication.',
+      'Prisma ORM on SQLite and Vercel PostgreSQL for transaction processing, category analytics and historical aggregation.',
+      'Responsive UI with TailwindCSS and shadcn/ui, plus interactive transaction visualizations.',
+    ],
+    tools: ['Next.js', 'TypeScript', 'React Query', 'Prisma', 'PostgreSQL', 'Clerk', 'Tailwind'],
+    role: 'Full Stack',
+    code: 'https://github.com/aks057/budget',
+    demo: '',
+  },
+  {
+    id: 2,
+    name: 'PricePal',
+    summary: 'Amazon product tracker that alerts on price drops and restocks.',
+    points: [
+      'Scrapes and tracks Amazon products for stock availability, price drops and significant discounts.',
+      'Sends timely email notifications so users buy at the right moment.',
+    ],
+    tools: ['Next.js', 'TypeScript', 'Node.js', 'MongoDB'],
+    role: 'Full Stack',
+    code: 'https://github.com/aks057/price-pal',
+    demo: 'https://price-pal-one.vercel.app/',
+  },
 ];
-
-
-// Do not remove any property.
-// Leave it blank instead as shown below
-
-// {
-//     id: 1,
-//     name: '',
-//     description: "",
-//     tools: [],
-//     role: '',
-//     code: '',
-//     demo: '',
-//     image: crefin,
-// },

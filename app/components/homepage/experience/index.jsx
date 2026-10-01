@@ -1,101 +1,87 @@
-// @flow strict
+"use client";
 
 import { experiences } from "@/utils/data/experience";
-import Image from "next/image";
-import { BsPersonWorkspace } from "react-icons/bs";
-import AnimationLottie from "../../helper/animation-lottie";
-import GlowCard from "../../helper/glow-card";
-import experience from '/public/lottie/code.json';
+import { useRef } from "react";
+import { FiArrowUp, FiMapPin } from "react-icons/fi";
+import { gsap, MOTION_OK, useGSAP } from "../../motion/gsap";
+import Reveal from "../../motion/reveal";
+import SectionHeader from "../section-header";
 
 function Experience() {
+  const ref = useRef(null);
+
+  // The timeline rail fills in as you scroll through the roles.
+  useGSAP(() => {
+    const mm = gsap.matchMedia();
+    mm.add(MOTION_OK, () => {
+      gsap.utils.toArray("[data-rail]", ref.current).forEach((rail) => {
+        gsap.fromTo(
+          rail,
+          { scaleY: 0 },
+          {
+            scaleY: 1,
+            ease: "none",
+            scrollTrigger: { trigger: rail.parentElement, start: "top 70%", end: "bottom 60%", scrub: true },
+          }
+        );
+      });
+    });
+  }, { scope: ref });
+
   return (
-    <section id="experience" className="py-12 lg:py-20 relative overflow-hidden">
-      {/* Enhanced Background Elements */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/4 right-0 w-72 h-72 bg-cyan-500/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
-      </div>
+    <section id="experience" ref={ref} className="py-24 md:py-32">
+      <SectionHeader index="02" label="Experience" title="Where I've been shipping." />
 
-      <div className="container mx-auto px-4 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 backdrop-blur-sm mb-4">
-            <span className="text-sm font-medium text-cyan-400">💼 Professional Journey</span>
-          </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-            Work <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Experience</span>
-          </h2>
-          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            Building innovative solutions and gaining valuable experience in the tech industry
-          </p>
-        </div>
+      {experiences.map((exp) => (
+        <div key={exp.id} className="grid gap-8 lg:grid-cols-[280px_1fr] lg:gap-16">
+          <Reveal self className="lg:sticky lg:top-32 lg:self-start">
+            <p className="text-2xl font-semibold tracking-tight text-fg">{exp.company}</p>
+            <p className="mt-2 inline-flex items-center gap-1.5 font-mono text-xs text-muted">
+              <FiMapPin /> {exp.location}
+            </p>
+          </Reveal>
 
-        {/* Centered Experience Cards */}
-        <div className="max-w-4xl mx-auto">
-          <div className="space-y-8">
-            {experiences.map((exp, index) => (
-              <div
-                key={exp.id}
-                className="glass-card p-6 lg:p-8 rounded-2xl hover:border-cyan-500/30 transition-all duration-500 group"
-              >
-                {/* Duration Badge */}
-                <div className="flex justify-between items-start mb-6">
-                  <div className="inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/30">
-                    <span className="text-sm font-medium text-cyan-400">{exp.duration}</span>
+          <div className="relative pl-8">
+            <span className="absolute left-[5px] top-2 h-[calc(100%-1rem)] w-px bg-line" />
+            <span data-rail className="absolute left-[5px] top-2 h-[calc(100%-1rem)] w-px origin-top bg-gradient-to-b from-accent to-accent-2" />
+
+            {exp.roles.map((role, i) => (
+              <div key={role.title}>
+                {i > 0 && (
+                  <div className="my-10 flex items-center gap-3">
+                    <span className="chip !border-emerald-400/30 !text-emerald-300">
+                      <FiArrowUp /> Promoted
+                    </span>
+                    <span className="h-px flex-1 bg-line" />
                   </div>
-                  <div className="text-cyan-400 group-hover:scale-110 transition-transform duration-300">
-                    <BsPersonWorkspace size={24} />
+                )}
+                <Reveal className="relative">
+                  <span className="absolute -left-8 top-1.5 h-[11px] w-[11px] rounded-full border-2 border-accent bg-ink" />
+                  <div data-reveal className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+                    <h3 className="text-lg font-medium text-fg">{role.title}</h3>
+                    <span className="font-mono text-xs text-muted">{role.duration}</span>
                   </div>
-                </div>
-
-                {/* Job Details */}
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="text-xl lg:text-2xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors duration-300">
-                      {exp.title}
-                    </h3>
-                    <p className="text-lg font-semibold text-slate-300 mb-1">
-                      {exp.company}
-                    </p>
-                    {exp.location && (
-                      <p className="text-sm text-slate-400 flex items-center gap-1">
-                        <span>📍</span> {exp.location}
-                      </p>
-                    )}
+                  <ul className="mt-4 space-y-3">
+                    {role.points.map((p) => (
+                      <li data-reveal key={p} className="flex gap-3 text-[15px] leading-relaxed text-muted">
+                        <span className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-muted" />
+                        {p}
+                      </li>
+                    ))}
+                  </ul>
+                  <div data-reveal className="mt-5 flex flex-wrap gap-2">
+                    {role.techStack.map((t) => (
+                      <span key={t} className="chip">{t}</span>
+                    ))}
                   </div>
-
-                  {exp.description && (
-                    <p className="text-slate-300 leading-relaxed">
-                      {exp.description}
-                    </p>
-                  )}
-
-                  {/* Tech Stack */}
-                  {exp.techStack && (
-                    <div className="space-y-3">
-                      <h4 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">
-                        Technologies Used
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {exp.techStack.map((tech, techIndex) => (
-                          <span 
-                            key={techIndex} 
-                            className="px-3 py-1 bg-gradient-to-r from-slate-800 to-slate-700 border border-slate-600 rounded-full text-sm font-medium text-slate-300 hover:border-cyan-500/50 hover:text-cyan-400 transition-all duration-300"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
+                </Reveal>
               </div>
             ))}
           </div>
         </div>
-      </div>
+      ))}
     </section>
   );
-};
+}
 
 export default Experience;

@@ -1,96 +1,141 @@
-// @flow strict
-import { personalData } from '@/utils/data/personal-data';
-import Link from 'next/link';
-import { BiLogoLinkedin } from "react-icons/bi";
-import { CiLocationOn } from "react-icons/ci";
-import { FaFacebook, FaStackOverflow } from 'react-icons/fa';
-import { FaXTwitter } from "react-icons/fa6";
-import { IoLogoGithub, IoMdCall } from "react-icons/io";
-import { MdAlternateEmail } from "react-icons/md";
-import ContactWithCaptcha from './contact-with-captcha';
-import ContactWithoutCaptcha from './contact-without-captcha';
+"use client";
+
+import { personalData } from "@/utils/data/personal-data";
+import { isValidEmail } from "@/utils/check-email";
+import { useState } from "react";
+import { FiCheck, FiCopy, FiMail, FiSend } from "react-icons/fi";
+import { toast } from "react-toastify";
+import Magnetic from "../../motion/magnetic";
+import Reveal from "../../motion/reveal";
+import SectionHeader from "../section-header";
+
+const EMPTY = { name: "", email: "", message: "" };
+const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
+const FIELD =
+  "w-full rounded-xl border border-line bg-surface-2 px-4 py-3 text-sm text-fg outline-none transition-colors placeholder:text-muted/70 focus:border-accent/60";
 
 function ContactSection() {
-  return (
-    <div id="contact" className="my-12 lg:my-16 relative mt-24 text-white">
-      <div className="hidden lg:flex flex-col items-center absolute top-24 -right-8">
-        <span className="bg-[#1a1443] w-fit text-white rotate-90 p-2 px-5 text-xl rounded-md">
-          CONTACT
-        </span>
-        <span className="h-36 w-[2px] bg-[#1a1443]"></span>
-      </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-        {
-          // (process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY) ? <ContactWithCaptcha />
-          //   : <ContactWithoutCaptcha />
-          <ContactWithoutCaptcha />
-        }
-        
+  const [input, setInput] = useState(EMPTY);
+  const [sending, setSending] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [emailError, setEmailError] = useState(false);
 
-        <div className="lg:w-3/4 ">
-          <div className="flex flex-col gap-5 lg:gap-9">
-            <p className="text-sm md:text-xl flex items-center gap-3">
-              <MdAlternateEmail
-                className="bg-[#8b98a5] p-2 rounded-full hover:bg-[#16f2b3] hover:scale-110 transition-all duration-300 text-gray-800 cursor-pointer"
-                size={36}
-              />
-              <span>{personalData.email}</span>
-            </p>
-            <p className="text-sm md:text-xl flex items-center gap-3">
-              <IoMdCall
-                className="bg-[#8b98a5] p-2 rounded-full hover:bg-[#16f2b3] hover:scale-110 transition-all duration-300 text-gray-800 cursor-pointer"
-                size={36}
-              />
-              <span>
-                {personalData.phone}
-              </span>
-            </p>
-            <p className="text-sm md:text-xl flex items-center gap-3">
-              <CiLocationOn
-                className="bg-[#8b98a5] p-2 rounded-full hover:bg-[#16f2b3] hover:scale-110 transition-all duration-300 text-gray-800 cursor-pointer"
-                size={36}
-              />
-              <span>
-                {personalData.address}
-              </span>
-            </p>
+  const set = (key) => (e) => setInput({ ...input, [key]: e.target.value });
+
+  const copyEmail = async () => {
+    await navigator.clipboard?.writeText(personalData.email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1800);
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    if (!isValidEmail(input.email)) {
+      setEmailError(true);
+      return;
+    }
+    const fail = () => toast.error(`Couldn't send right now. Email me at ${personalData.email}`);
+    if (!WEB3FORMS_KEY) {
+      fail();
+      return;
+    }
+    setSending(true);
+    try {
+      // Web3Forms' free plan only accepts browser submissions; the access key is meant to be public.
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: `Portfolio message from ${input.name}`,
+          from_name: "Portfolio contact form",
+          replyto: input.email,
+          botcheck: "",
+          ...input,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!data.success) throw new Error();
+      toast.success("Message sent. I'll get back to you soon.");
+      setInput(EMPTY);
+    } catch {
+      fail();
+    } finally {
+      setSending(false);
+    }
+  };
+
+  return (
+    <section id="contact" className="py-24 md:py-32">
+      <SectionHeader index="07" label="Contact" title="Let's build something together.">
+        I&apos;m open to SDE roles and interesting engineering problems. The fastest way to reach me is email; the form works too.
+      </SectionHeader>
+
+      <div className="grid gap-4 lg:grid-cols-5">
+        <Reveal className="card flex flex-col justify-between gap-10 p-6 md:p-8 lg:col-span-2">
+          <div data-reveal>
+            <p className="section-label mb-4">Email</p>
+            <a href={`mailto:${personalData.email}`} className="break-all text-xl font-medium text-fg hover:underline sm:text-2xl">
+              {personalData.email}
+            </a>
           </div>
-          <div className="mt-8 lg:mt-16 flex items-center gap-5 lg:gap-10">
-            <Link target="_blank" href={personalData.github}>
-              <IoLogoGithub
-                className="bg-[#8b98a5] p-3 rounded-full hover:bg-[#16f2b3] hover:scale-110 transition-all duration-300 text-gray-800 cursor-pointer"
-                size={48}
-              />
-            </Link>
-            <Link target="_blank" href={personalData.linkedIn}>
-              <BiLogoLinkedin
-                className="bg-[#8b98a5] p-3 rounded-full hover:bg-[#16f2b3] hover:scale-110 transition-all duration-300 text-gray-800 cursor-pointer"
-                size={48}
-              />
-            </Link>
-            <Link target="_blank" href={personalData.twitter}>
-              <FaXTwitter
-                className="bg-[#8b98a5] p-3 rounded-full hover:bg-[#16f2b3] hover:scale-110 transition-all duration-300 text-gray-800 cursor-pointer"
-                size={48}
-              />
-            </Link>
-            <Link target="_blank" href={personalData.stackOverflow}>
-              <FaStackOverflow
-                className="bg-[#8b98a5] p-3 rounded-full hover:bg-[#16f2b3] hover:scale-110 transition-all duration-300 text-gray-800 cursor-pointer"
-                size={48}
-              />
-            </Link>
-            {/* <Link target="_blank" href={personalData.facebook}>
-              <FaFacebook
-                className="bg-[#8b98a5] p-3 rounded-full hover:bg-[#16f2b3] hover:scale-110 transition-all duration-300 text-gray-800 cursor-pointer"
-                size={48}
-              />
-            </Link> */}
+          <div data-reveal className="flex flex-wrap gap-3">
+            <Magnetic>
+              <a href={`mailto:${personalData.email}`} className="btn-solid">
+                <FiMail /> Say hello
+              </a>
+            </Magnetic>
+            <button onClick={copyEmail} className="btn-ghost">
+              {copied ? <FiCheck /> : <FiCopy />} {copied ? "Copied" : "Copy"}
+            </button>
           </div>
-        </div>
+        </Reveal>
+
+        <Reveal as="form" self onSubmit={onSubmit} className="card flex flex-col gap-4 p-6 md:p-8 lg:col-span-3" noValidate>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <label className="flex flex-col gap-2">
+              <span className="section-label">Name</span>
+              <input className={FIELD} required maxLength={100} value={input.name} onChange={set("name")} placeholder="Jane Doe" />
+            </label>
+            <label className="flex flex-col gap-2">
+              <span className="section-label">Email</span>
+              <input
+                className={FIELD}
+                type="email"
+                required
+                maxLength={100}
+                value={input.email}
+                onChange={(e) => { set("email")(e); setEmailError(false); }}
+                onBlur={() => input.email && setEmailError(!isValidEmail(input.email))}
+                placeholder="jane@company.com"
+                aria-invalid={emailError}
+              />
+              {emailError && <span className="text-xs text-red-400">Please enter a valid email.</span>}
+            </label>
+          </div>
+          <label className="flex flex-col gap-2">
+            <span className="section-label">Message</span>
+            <textarea
+              className={`${FIELD} resize-none`}
+              required
+              rows={5}
+              maxLength={1000}
+              value={input.message}
+              onChange={set("message")}
+              placeholder="Tell me about the role or project…"
+            />
+          </label>
+          <button
+            type="submit"
+            disabled={sending || !input.name || !input.email || !input.message}
+            className="btn-solid mt-2 justify-center disabled:cursor-not-allowed disabled:opacity-50 sm:self-end"
+          >
+            {sending ? "Sending…" : "Send message"} <FiSend />
+          </button>
+        </Reveal>
       </div>
-    </div>
+    </section>
   );
-};
+}
 
 export default ContactSection;

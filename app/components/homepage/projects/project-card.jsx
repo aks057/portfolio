@@ -1,54 +1,110 @@
-// @flow strict
+"use client";
 
-import * as React from 'react';
-import { BsCodeSlash } from "react-icons/bs";
+import { useRef } from "react";
+import { FiArrowUpRight, FiGithub } from "react-icons/fi";
+import { gsap, MOTION_OK, MOTION_REDUCED, useGSAP } from "../../motion/gsap";
 
-function ProjectCard({ project }) {
+const GRADIENTS = [
+  "from-indigo-500/30 via-violet-500/10 to-transparent",
+  "from-cyan-400/25 via-sky-500/10 to-transparent",
+];
+
+function ProjectCard({ project, index }) {
+  const ref = useRef(null);
+
+  useGSAP(() => {
+    const q = gsap.utils.selector(ref);
+    const mm = gsap.matchMedia();
+    mm.add(MOTION_OK, () => {
+      gsap.fromTo(
+        ref.current,
+        { autoAlpha: 0, y: 60 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 1.1,
+          ease: "power3.out",
+          delay: index * 0.12,
+          scrollTrigger: { trigger: ref.current, start: "top 88%", once: true },
+        }
+      );
+      // Big index numeral drifts against scroll for a subtle parallax.
+      gsap.fromTo(
+        q("[data-parallax]"),
+        { yPercent: 25 },
+        {
+          yPercent: -25,
+          ease: "none",
+          scrollTrigger: { trigger: ref.current, start: "top bottom", end: "bottom top", scrub: true },
+        }
+      );
+    });
+    mm.add(MOTION_REDUCED, () => gsap.set(ref.current, { autoAlpha: 1 }));
+  }, { scope: ref });
+
+  const primaryLink = project.demo || project.code;
 
   return (
-    <div className="p-6 lg:p-8 group">
-      {/* Project Badge */}
-      <div className="flex justify-between items-start mb-6">
-        <div className="inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r from-orange-500/20 to-red-500/20 border border-orange-500/30">
-          <span className="text-sm font-medium text-orange-400">{project.role}</span>
+    <article ref={ref} data-reveal className="card group flex flex-col">
+      <div className={`relative h-56 overflow-hidden border-b border-line bg-gradient-to-br ${GRADIENTS[index % GRADIENTS.length]} sm:h-64`}>
+        <div className="bg-grid absolute inset-0 opacity-60" />
+        <span
+          data-parallax
+          aria-hidden="true"
+          className="absolute -bottom-6 right-4 select-none font-mono text-[9rem] font-bold leading-none text-white/[0.06] sm:text-[11rem]"
+        >
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <div className="absolute left-6 top-6 flex flex-wrap gap-2">
+          <span className="chip bg-ink/60 backdrop-blur">{project.role}</span>
         </div>
-        <div className="text-orange-400 group-hover:scale-110 transition-transform duration-300">
-          <BsCodeSlash size={24} />
-        </div>
+        <h3 className="absolute bottom-6 left-6 text-4xl font-semibold tracking-tight text-fg transition-transform duration-500 group-hover:-translate-y-1 sm:text-5xl">
+          {project.name}
+        </h3>
       </div>
 
-      {/* Project Details */}
-      <div className="space-y-4">
-        <div>
-          <h3 className="text-xl lg:text-2xl font-bold text-white mb-2 group-hover:text-orange-400 transition-colors duration-300">
-            {project.name}
-          </h3>
-          <p className="text-slate-300 leading-relaxed">
-            {project.description}
-          </p>
+      <div className="flex flex-1 flex-col p-6 md:p-8">
+        <p className="text-lg text-fg">{project.summary}</p>
+        <ul className="mt-4 space-y-2.5">
+          {project.points.map((p) => (
+            <li key={p} className="flex gap-3 text-sm leading-relaxed text-muted">
+              <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-muted" />
+              {p}
+            </li>
+          ))}
+        </ul>
+        <div className="mt-6 flex flex-wrap gap-2">
+          {project.tools.map((t) => (
+            <span key={t} className="chip">{t}</span>
+          ))}
         </div>
 
-        {/* Tech Stack */}
-        {project.tools && (
-          <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-slate-400 uppercase tracking-wider">
-              Technologies Used
-            </h4>
-            <div className="flex flex-wrap gap-2">
-              {project.tools.map((tool, toolIndex) => (
-                <span 
-                  key={toolIndex} 
-                  className="px-3 py-1 bg-gradient-to-r from-slate-800 to-slate-700 border border-slate-600 rounded-full text-sm font-medium text-slate-300 hover:border-orange-500/50 hover:text-orange-400 transition-all duration-300"
-                >
-                  {tool}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
+        <div className="mt-auto flex items-center gap-3 pt-8">
+          {project.demo && (
+            <a href={project.demo} target="_blank" rel="noopener noreferrer" className="btn-solid !py-2">
+              Live <FiArrowUpRight />
+            </a>
+          )}
+          {project.code && (
+            <a href={project.code} target="_blank" rel="noopener noreferrer" className="btn-ghost !py-2">
+              <FiGithub /> Code
+            </a>
+          )}
+          {primaryLink && (
+            <a
+              href={primaryLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open ${project.name}`}
+              className="ml-auto grid h-10 w-10 place-items-center rounded-full border border-line text-muted transition-all duration-300 group-hover:rotate-45 group-hover:border-white/30 group-hover:text-fg"
+            >
+              <FiArrowUpRight />
+            </a>
+          )}
+        </div>
       </div>
-    </div>
+    </article>
   );
-};
+}
 
 export default ProjectCard;

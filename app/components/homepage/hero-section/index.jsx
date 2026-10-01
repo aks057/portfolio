@@ -1,195 +1,122 @@
-// @flow strict
+"use client";
 
 import { personalData } from "@/utils/data/personal-data";
-import Image from "next/image";
-import Link from "next/link";
-import { BsGithub, BsLinkedin } from "react-icons/bs";
-import { FaFacebook, FaTwitterSquare } from "react-icons/fa";
-import { MdDownload } from "react-icons/md";
-import { RiContactsFill } from "react-icons/ri";
-import { SiLeetcode } from "react-icons/si";
+import { socials } from "@/utils/data/socials";
+import { useRef } from "react";
+import { FiArrowDown, FiArrowUpRight, FiMapPin } from "react-icons/fi";
+import { gsap, MOTION_OK, MOTION_REDUCED, useGSAP } from "../../motion/gsap";
+import Magnetic from "../../motion/magnetic";
+import { scrollToHash } from "../../motion/smooth-scroll";
+
+const HEADLINE = ["Software engineer", "building AI products", "for regulated industries."];
 
 function HeroSection() {
+  const ref = useRef(null);
+
+  useGSAP(() => {
+    const q = gsap.utils.selector(ref);
+    const mm = gsap.matchMedia();
+
+    mm.add(MOTION_OK, () => {
+      const tl = gsap.timeline({ defaults: { ease: "expo.out", duration: 1.1 } });
+      tl.fromTo(q("[data-hero='badge']"), { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0 })
+        .fromTo(q("[data-hero='line']"), { autoAlpha: 0, yPercent: 105 }, { autoAlpha: 1, yPercent: 0, stagger: 0.1, duration: 1.3 }, "-=0.8")
+        .fromTo(q("[data-hero='fade']"), { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, stagger: 0.08 }, "-=0.9");
+
+      // Content drifts up and fades as the hero scrolls away; the orbs move slower for depth.
+      gsap.to(q("[data-hero='content']"), {
+        yPercent: -12,
+        autoAlpha: 0.2,
+        ease: "none",
+        scrollTrigger: { trigger: ref.current, start: "top top", end: "bottom top", scrub: true },
+      });
+      gsap.to(q("[data-hero='orbs']"), {
+        yPercent: 25,
+        ease: "none",
+        scrollTrigger: { trigger: ref.current, start: "top top", end: "bottom top", scrub: true },
+      });
+    });
+    mm.add(MOTION_REDUCED, () => gsap.set(q("[data-reveal]"), { autoAlpha: 1 }));
+  }, { scope: ref });
+
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center py-8 lg:py-16 overflow-hidden pt-20">
-      {/* Enhanced Background Elements */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+    <section id="top" ref={ref} className="relative flex min-h-[100svh] items-center pb-16 pt-32">
+      <div data-hero="orbs" aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        <div className="bg-grid absolute left-1/2 top-0 h-[80vh] w-screen -translate-x-1/2" />
+        <div className="orb absolute -top-24 right-[-10%] h-[420px] w-[420px] rounded-full bg-accent/25 blur-[120px] sm:h-[520px] sm:w-[520px]" />
+        <div className="orb absolute bottom-0 left-[-15%] h-[360px] w-[360px] rounded-full bg-accent-2/15 blur-[120px] [animation-delay:-7s]" />
       </div>
 
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="grid grid-cols-1 items-center lg:grid-cols-2 lg:gap-16 gap-y-12">
-          {/* Enhanced Text Content */}
-          <div className="order-2 lg:order-1 flex flex-col items-start justify-center space-y-8 animate-fade-in-up">
-            <div className="space-y-6">
-              <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/20 backdrop-blur-sm">
-                <span className="text-sm font-medium text-blue-400">Welcome to my portfolio</span>
-              </div>
-              
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                Hi, I&apos;m{' '}
-                <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent">
-                  {personalData.name}
-                </span>
-              </h1>
-              
-              <div className="text-xl md:text-2xl lg:text-3xl font-semibold">
-                <span className="text-slate-400">I&apos;m a </span>
-                <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                  {personalData.designation}
-                </span>
-              </div>
-              
-              <p className="text-lg text-slate-400 leading-relaxed max-w-2xl">
-                Passionate about building innovative solutions with modern technologies. 
-                Currently working at Leucine - AI for Pharma, creating impactful applications 
-                that make a difference.
-              </p>
-            </div>
+      <div data-hero="content" className="w-full">
+        <div data-hero="badge" data-reveal className="mb-8 inline-flex items-center gap-2 rounded-full border border-line bg-surface/60 px-3 py-1.5 font-mono text-xs text-muted backdrop-blur">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+          </span>
+          SDE @ Leucine · open to new Learnings
+        </div>
 
-            {/* Enhanced Social Links */}
-            <div className="flex items-center gap-4">
-              {[
-                { href: personalData.github, icon: BsGithub, label: "GitHub" },
-                { href: personalData.linkedIn, icon: BsLinkedin, label: "LinkedIn" },
-                // { href: personalData.facebook, icon: FaFacebook, label: "Facebook" },
-                { href: personalData.leetcode, icon: SiLeetcode, label: "LeetCode" },
-                { href: personalData.twitter, icon: FaTwitterSquare, label: "Twitter" }
-              ].map(({ href, icon: Icon, label }) => (
-                <Link
-                  key={label}
+        <h1 className="text-[2.6rem] font-semibold leading-[1.02] tracking-[-0.035em] text-fg sm:text-6xl md:text-7xl lg:text-[5.5rem]">
+          <span className="sr-only">{personalData.name}, </span>
+          {HEADLINE.map((line, i) => (
+            <span key={line} className="block overflow-hidden pb-[0.08em]">
+              <span data-hero="line" data-reveal className={`block ${i === 2 ? "text-gradient" : ""}`}>
+                {line}
+              </span>
+            </span>
+          ))}
+        </h1>
+
+        <p data-hero="fade" data-reveal className="mt-8 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
+          I&apos;m <span className="text-fg">{personalData.name}</span>. {personalData.tagline}
+        </p>
+
+        <div data-hero="fade" data-reveal className="mt-10 flex flex-wrap items-center gap-3">
+          <Magnetic>
+            <a
+              href="#projects"
+              onClick={(e) => { e.preventDefault(); scrollToHash("#projects"); }}
+              className="btn-solid"
+            >
+              View my work <FiArrowUpRight />
+            </a>
+          </Magnetic>
+          <Magnetic>
+            <a href={personalData.resume} target="_blank" rel="noopener" className="btn-ghost">
+              Download resume
+            </a>
+          </Magnetic>
+        </div>
+
+        <div data-hero="fade" data-reveal className="mt-14 flex flex-col gap-6 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-1">
+            {socials.map(({ label, href, icon: Icon }) => (
+              <Magnetic key={label} strength={0.5}>
+                <a
                   href={href}
                   target="_blank"
-                  className="group relative p-3 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 hover:scale-110 hover:bg-slate-800/80"
+                  rel="noopener noreferrer"
                   aria-label={label}
+                  className="grid h-10 w-10 place-items-center rounded-full border border-line text-muted transition-colors hover:border-white/30 hover:text-fg"
                 >
-                  <Icon size={24} className="text-slate-400 group-hover:text-blue-400 transition-colors duration-300" />
-                  <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-slate-800 text-xs text-slate-300 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                    {label}
-                  </div>
-                </Link>
-              ))}
-            </div>
-
-            {/* Enhanced Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-              <Link 
-                href="#about" 
-                className="btn-primary group flex items-center gap-2 px-8 py-4 text-base font-semibold"
-              >
-                <span>Learn More</span>
-                <RiContactsFill size={18} className="group-hover:translate-x-1 transition-transform duration-300" />
-              </Link>
-
-              <Link 
-                href={personalData.resume}
-                target="_blank"
-                className="group flex items-center gap-2 px-8 py-4 rounded-xl border-2 border-slate-600 text-slate-300 hover:border-blue-500 hover:text-blue-400 transition-all duration-300 font-semibold"
-              >
-                <span>Download Resume</span>
-                <MdDownload size={18} className="group-hover:translate-y-1 transition-transform duration-300" />
-              </Link>
-            </div>
+                  <Icon size={16} />
+                </a>
+              </Magnetic>
+            ))}
           </div>
-
-          {/* Enhanced Code Terminal */}
-          <div className="order-1 lg:order-2 animate-fade-in-scale">
-            <div className="glass-card p-0 overflow-hidden">
-              {/* Terminal Header */}
-              <div className="flex items-center justify-between px-6 py-4 bg-slate-800/50 border-b border-slate-700/50">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                  <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                </div>
-                <div className="text-sm text-slate-400 font-mono">developer.js</div>
-                <div className="w-16"></div>
-              </div>
-
-              {/* Enhanced Code Content */}
-              <div className="p-6 lg:p-8 bg-slate-900/50">
-                <code className="font-mono text-sm lg:text-base leading-relaxed">
-                  <div className="mb-2">
-                    <span className="text-purple-400">const</span>
-                    <span className="text-slate-300 ml-2">developer</span>
-                    <span className="text-purple-400 ml-2">=</span>
-                    <span className="text-slate-400 ml-2">{'{'}</span>
-                  </div>
-                  
-                  <div className="ml-4 mb-1">
-                    <span className="text-blue-400">name:</span>
-                    <span className="text-slate-400 ml-2">&apos;</span>
-                    <span className="text-green-400">{personalData.name}</span>
-                    <span className="text-slate-400">&apos;,</span>
-                  </div>
-                  
-                  <div className="ml-4 mb-1">
-                    <span className="text-blue-400">role:</span>
-                    <span className="text-slate-400 ml-2">&apos;</span>
-                    <span className="text-green-400">Software Engineer at Leucine AI</span>
-                    <span className="text-slate-400">&apos;,</span>
-                  </div>
-                  
-                  <div className="ml-4 mb-1">
-                    <span className="text-blue-400">skills:</span>
-                    <span className="text-slate-400 ml-2">[&apos;</span>
-                    <span className="text-green-400">React</span>
-                    <span className="text-slate-400">&apos;, &apos;</span>
-                    <span className="text-green-400">TypeScript</span>
-                    <span className="text-slate-400">&apos;, &apos;</span>
-                    <span className="text-green-400">Java</span>
-                    <span className="text-slate-400">&apos;, &apos;</span>
-                    <span className="text-green-400">PostgreSQL</span>
-                    <span className="text-slate-400">&apos;],</span>
-                  </div>
-                  
-                  <div className="ml-4 mb-1">
-                    <span className="text-blue-400">passionate:</span>
-                    <span className="text-orange-400 ml-2">true</span>
-                    <span className="text-slate-400">,</span>
-                  </div>
-                  
-                  <div className="ml-4 mb-1">
-                    <span className="text-blue-400">problemSolver:</span>
-                    <span className="text-orange-400 ml-2">true</span>
-                    <span className="text-slate-400">,</span>
-                  </div>
-                  
-                  <div className="ml-4 mb-2">
-                    <span className="text-green-400">hireable:</span>
-                    <span className="text-orange-400 ml-2">function</span>
-                    <span className="text-slate-400">() {'{'}</span>
-                  </div>
-                  
-                  <div className="ml-8 mb-1">
-                    <span className="text-purple-400">return</span>
-                    <span className="text-slate-400 ml-2">this.passionate &&</span>
-                  </div>
-                  
-                  <div className="ml-12 mb-1">
-                    <span className="text-slate-400">this.problemSolver &&</span>
-                  </div>
-                  
-                  <div className="ml-12 mb-2">
-                    <span className="text-slate-400">this.skills.length {'>'} 0;</span>
-                  </div>
-                  
-                  <div className="ml-4 mb-1">
-                    <span className="text-slate-400">{'}'}</span>
-                  </div>
-                  
-                  <div>
-                    <span className="text-slate-400">{'};'}</span>
-                  </div>
-                </code>
-              </div>
-            </div>
+          <div className="flex items-center gap-6 font-mono text-xs text-muted">
+            <span className="inline-flex items-center gap-1.5"><FiMapPin /> {personalData.address}</span>
+            <button
+              onClick={() => scrollToHash("#about")}
+              className="hidden items-center gap-1.5 transition-colors hover:text-fg sm:inline-flex"
+            >
+              Scroll <FiArrowDown className="animate-bounce" />
+            </button>
           </div>
         </div>
       </div>
     </section>
   );
-};
+}
 
 export default HeroSection;

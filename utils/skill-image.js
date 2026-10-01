@@ -1,4 +1,3 @@
-// Only import skills that are actually used
 import cplusplus from '/public/svg/skills/cplusplus.svg';
 import css from '/public/svg/skills/css.svg';
 import firebase from '/public/svg/skills/firebase.svg';
@@ -11,46 +10,27 @@ import mysql from '/public/svg/skills/mysql.svg';
 import nextJS from '/public/svg/skills/nextJS.svg';
 import postgresql from '/public/svg/skills/postgresql.svg';
 import react from '/public/svg/skills/react.svg';
+import sqlite from '/public/svg/skills/sqlite.svg';
 import tailwind from '/public/svg/skills/tailwind.svg';
 import typescript from '/public/svg/skills/typescript.svg';
 
+const icons = {
+  'c++': cplusplus,
+  java,
+  javascript,
+  typescript,
+  react,
+  'next js': nextJS,
+  tailwind,
+  postgresql,
+  mongodb: mongoDB,
+  mysql,
+  firebase,
+  sqlite,
+  html,
+  css,
+  git,
+};
 
-export const skillsImage = (skill) => {
-  const skillID = skill.toLowerCase();
-  switch (skillID) {
-    case 'c++':
-      return cplusplus;
-    case 'java':
-      return java;
-    case 'javascript':
-      return javascript;
-    case 'typescript':
-      return typescript;
-    case 'react':
-      return react;
-    case 'next js':
-      return nextJS;
-    case 'node js':
-      return javascript;
-    case 'tailwind':
-      return tailwind;
-    case 'postgresql':
-      return postgresql;
-    case 'mongodb':
-      return mongoDB;
-    case 'mysql':
-      return mysql;
-    case 'firebase':
-      return firebase;
-    case 'html':
-      return html;
-    case 'css':
-      return css;
-    case 'git':
-      return git;
-    case 'prisma':
-      return postgresql; // Using PostgreSQL icon as fallback for Prisma
-    default:
-      break;
-  }
-}
+// Returns undefined for skills without an icon; callers render a text fallback.
+export const skillsImage = (skill) => icons[skill.toLowerCase()];
